@@ -3,13 +3,14 @@
 
 title: <font size="6"><span style="color:#FFD700">D</span>ocker <span style="color:#FFA500">S</span>tack <span style="color:#FF7F50">J</span>enkins</font>
 description: <b><i><font size="3">A Docker container for Jenkins builds</span></font></i></b>
+
 show_downloads: true
 google_analytics:
 theme: jekyll-theme-architect
 
 # Used for discussion link
 repository_owner: NicoJanE                          # kind of fixed
-repository_name:      # Update this(repository name) if discussions are enabled in GitHub. When Empty it will state 'no Discussions'
+repository_name: # Update this(repository name) if discussions are enabled in GitHub. When Empty it will state 'no Discussions'
 
 # includes home links for this page, leave blank in case of no Home links. 
 home_site_name: 
@@ -83,8 +84,4 @@ toc:
 #
 BaseDir: Howtos
 
-port: 4000
-			
-                
-                
-              
+port: 4000    
