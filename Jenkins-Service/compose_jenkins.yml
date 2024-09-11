@@ -1,0 +1,49 @@
+networks:
+  nje-jek:                          # Define a network
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.16.0.0/16  # Custom subnet for fixed IPs
+        
+        
+volumes:
+  nje-shared_container-vol:         # named volumes, for: sharing data between containers, persistent data
+                                    # can be used in service volumes, like: nje-shared_container-vol:./workspace/shared 
+                                   
+services:
+  jenkins-img:                      # Our service 
+    build: 	    
+      context: .
+      dockerfile: Dockerfile_Jenkins 
+    ports:                                 
+      - "8081:8080"                         # host:cont 
+      - "50000:5000"                        # host:cont 
+    networks:                               # commented because we use Host network in service
+      nje-jek:                              # Use this Network
+        ipv4_address: 172.16.0.10           # Assign a fixed IP to the container
+    volumes:
+#     - ../workspace:/workspace             # Bind mount to .Net 8.o workspace directory        
+      - /var/run/docker.sock:/var/run/docker.sock   # Jenkins access to the Docker daemon on your host.
+      - ./jenkins_home:/var/jenkins_home             # Persists Jenkins data (jobs, configurations)    
+    environment:
+      - JAVA_OPTS=-Djenkins.install.runSetupWizard=false    # Disables the Jenkins setup wizard    
+    command: ["java", "-jar", "/usr/share/jenkins/jenkins.war", "--httpPort=8080"]  # Run Jenkins (Java) Note port is internal
+    
+    
+  mailhog:
+    image: mailhog/mailhog
+    ports:
+      - "1025:1025"                         # SMTP port
+      - "8025:8025"                         # Web UI port
+    networks:
+      - nje-jek
+
+# For mailhog:
+# No account needed, you can what every you like; for example:an-error@local.jek
+# 1) Jenkins -> Configuration ->Extended E-Mail Notification. 
+#       - Enter: mailhog, 
+#       - port:1025 
+# 2) Access: http://localhost:8025 to view the mail received
+    
+# Create and start: docker-compose -f compose_jenkins.yml up -d --build --force-recreate 
+

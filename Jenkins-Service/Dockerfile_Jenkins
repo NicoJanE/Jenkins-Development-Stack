@@ -1,0 +1,27 @@
+# Base image (Debian based)
+FROM jenkins/jenkins:lts
+
+# Install system packages
+USER root
+RUN apt-get update && apt-get install -y curl nano docker.io
+
+# set permissions, not sure if needed, TEST
+RUN chown -R root:root /var/jenkins_home/
+RUN chmod -R 777 /var/jenkins_home/
+#
+# Revert to orginal user for rest of installation
+USER jenkins
+
+# Add environment variables
+#ENV PATH="/root/gems/bin:$PATH"
+
+# Set working directory for subsequent commands
+WORKDIR /workspace
+
+# Default .NET port
+EXPOSE 8081
+EXPOSE 50000 
+
+# Keep  container running with this
+CMD ["tail", "-f", "/dev/null"] 
+
