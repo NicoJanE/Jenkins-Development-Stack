@@ -17,22 +17,28 @@ This Jenkins container consists of:
 
 Jenkins may display the following warning: *"Building on the built-in node can be a security issue. You should set up distributed builds. See the documentation."* **However**, since this setup is intended for local development environments and not for organizational use (where security risks are more prominent), these risks are less significant for local systems with only a few connected devices. Therefore, you can safely dismiss the message in this context. <br><br>
 
-## 1. Create the WSL
+
+## 1.1 Download the Special Ubuntu WSL version
+Finding this version can be a bit challenging, especially because we need the manual installation files (with the .Appx or .AppxBundle extensions). The Windows Store provides a direct installer, but we cannot use it because we need to control the installation name and location. Follow these steps:
+- ([Download](https://learn.microsoft.com/en-us/windows/wsl/install-manual)) the image from here, Scroll to almost the bottom where it states **'Downloading distributions'** and choose the *Ubuntu 24.04* link (note that this is the distribution  we support, you may try other ones and be fine with it, but we have not tested it)
+- Now, as of Aug 2024, a lott of documentation\samples will state that your receive **\*.Appx** extension file and that you need to change the file to **\*.zip.**  But in our case you probably receive a **\*.AppxBundle** file which contains multiple Ubuntu versions. Below is shown how we get access to the right folder so we can install it in the next paragraph (in my case the download name is ***'Ubuntu2204-221101.AppxBundle'*** we use this name in our example:
+
+  - First rename ***'Ubuntu2204-221101.AppxBundle'***' to ***'Ubuntu2204-221101.zip'***
+  - Unpack the file with for example **7zip**
+  - In the unpacked folder locate the file for your machine distribution ,likely ***'Ubuntu_2204.1.7.0_x64.appx'** rename this file to *.zip
+  - Unpack the above renamed zip file
+  - In the resulting folder you should see a file called ***'install.tar.gz'*** this is the location where the next command has to point to.
+
+
+## 1.2 Create the WSL
 To create the necessary WSL and assign it to the Docker image, follow these steps:
-- The Ubuntu 24.04 is part of this repository it can be found at: **../Jenkins Development Stack/_#Installs_Required\wsl_ubuntu_x64\Ubuntu_2204.1.7.0_x64/install.tar.gz**
-- Run the following command to import the WSL distribution:
-<pre class="nje-cmd-one-line">wsl --import Ubuntu-docker-Jenkins ./wsl2-distro  ../_#Installs_Required\wsl_ubuntu_x64\Ubuntu_2204.1.7.0_x64/install.tar.gz </pre>
+- Run the following command to import the WSL distribution, **replace** the ***install.tar.gz*** with the result from the previous step!
+<pre class="nje-cmd-one-line">wsl --import Ubuntu-docker-Jenkins ./wsl2-distro  install.tar.gz </pre>
 
 This command will create a WSL distribution in the folder **Jenkins-Service/wsl2-distro** with the name **Ubuntu-docker-Jenkins**.
-- Ensure that this WSL distribution is connected  to your Docker setup (**Do this after you have executed paragraph 2**)
-    - In Docker -> Settings -> Resource -> WSL integration
-    - In the **'Enable integration with additional distros:'** section (if you don't see this option,  press: Refetch distros)
-    - Select ***Ubuntu-docker-Jenkins*** 
-    - Press Apply & Restart (You may need to restart the Docker container manually)
-Note: You don’t need to start the WSL distribution yourself. Docker will automatically start it when needed. You can verify this by observing that the WSL is running when the Jenkins container is started, even though you haven’t manually started the WSL.
 <br><br>
 
-## 2 Create & configure the container
+## 2.1 Create & configure the container
 To create the Docker container:
 - Navigate to the service folder: ***Jenkins-Service***
 - Run the following command to create the container
@@ -42,9 +48,18 @@ To create the Docker container:
 - A new container named 'jenkins-service\jenkins-img-1'should be present in Docker Desktop and should be running.
 - The Jenkins files created during the installation of plugins and Build Tasks you create will reside in the folder: **Jenkins-Service\jenkins_home**. When reinstalling Jenkins and using the same folder (as specified in the Docker Compose file), it will reuse these files. It’s recommended to **back them up** from time to time!
 - You can access Jenkins on the host (if you haven’t changed the port) by navigating to **[http://localhost:8081/](http://localhost:8081/)**
+<br><br>
 
+## 2.2 Connect the Wsl from 1.2 to the docker container
+- Ensure that this WSL distribution is connected  to your Docker setup
+    - In Docker -> Settings -> Resource -> WSL integration
+    - In the **'Enable integration with additional distros:'** section (if you don't see this option,  press: Refetch distros)
+    - Select ***Ubuntu-docker-Jenkins*** 
+    - Press Apply & Restart (You may need to restart the Docker container manually)
+Note: You don’t need to start the WSL distribution yourself. Docker will automatically start it when needed. You can verify this by observing that the WSL is running when the Jenkins container is started, even though you haven’t manually started the WSL.
+<br><br>
 
-### 2.1 Initial Jenkins configuration
+### 2.3 Initial Jenkins configuration
 - In Docker Desktop, examine the start-up log of the container. Near the top, you should find a code that is required for the initial login.
 - Start Jenkins by opening:[http://localhost:8081/](http://localhost:8081/) in your Browser
 - When prompted, enter the login code from the start-up log.
@@ -57,7 +72,7 @@ To create the Docker container:
 > - <small>  ***curl -s http://host.docker.internal:4072**/* </small>
 
 
-### 2.2 Use the  Local Email Service
+### 2.4 Use the  Local Email Service
 The image also installs an email-like server that can be used to send local emails in case a **build task fails**. This provides a centralized location to review error notifications.
 
 To configure it in Jenkins:
