@@ -32,11 +32,19 @@ Finding this version can be a bit challenging, especially because we need the ma
 
 ## 1.2 Create the WSL
 To create the necessary WSL and assign it to the Docker image, follow these steps:
-- Run the following command to import the WSL distribution, **replace** the ***install.tar.gz*** with the result from the previous step!
-<pre class="nje-cmd-one-line">wsl --import Ubuntu-docker-Jenkins ./wsl2-distro  install.tar.gz </pre>
+- Open a CMD in the service directory (Jenkins-Service)
+- Run the following command to import the WSL distribution, **replace** the ***install.tar.gz*** with the result from the result of **Paragraph 1.1**
+<pre class="nje-cmd-one-line">wsl --import Ubuntu-docker-Jenkins ./wsl2-distro  "install.tar.gz" </pre>
 
 This command will create a WSL distribution in the folder **Jenkins-Service/wsl2-distro** with the name **Ubuntu-docker-Jenkins**.
-<br><br>
+- start the WSL distribution with
+<pre class="nje-cmd-multi-line">
+wsl -l -v                               # Displays the available distributions
+wsl -d Ubuntu-docker-Jenkins            # Starts it, use 'exit' to return 
+# Other wsl commands:
+# wsl --terminate  Ubuntu-docker-Jenkins    # Stops the WSL distribution
+# wsl --unregister Ubuntu-docker-Jenkins    # Removes its </pre>
+<br>
 
 ## 2.1 Create & configure the container
 To create the Docker container:
@@ -45,7 +53,8 @@ To create the Docker container:
 <pre class="nje-cmd-one-line">docker-compose -f compose_jenkins.yml up -d --build --force-recreate </pre>
 
 #### Expected results 
-- A new container named 'jenkins-service\jenkins-img-1'should be present in Docker Desktop and should be running.
+- A new container named **'jenkins-service\jenkins-img-1**'should be present in Docker Desktop and should be running. 
+- Also a sub container **jenkins-service\mailhog-1'**should be present.
 - The Jenkins files created during the installation of plugins and Build Tasks you create will reside in the folder: **Jenkins-Service\jenkins_home**. When reinstalling Jenkins and using the same folder (as specified in the Docker Compose file), it will reuse these files. It’s recommended to **back them up** from time to time!
 - You can access Jenkins on the host (if you haven’t changed the port) by navigating to **[http://localhost:8081/](http://localhost:8081/)**
 <br><br>
@@ -55,15 +64,16 @@ To create the Docker container:
     - In Docker -> Settings -> Resource -> WSL integration
     - In the **'Enable integration with additional distros:'** section (if you don't see this option,  press: Refetch distros)
     - Select ***Ubuntu-docker-Jenkins*** 
-    - Press Apply & Restart (You may need to restart the Docker container manually)
-Note: You don’t need to start the WSL distribution yourself. Docker will automatically start it when needed. You can verify this by observing that the WSL is running when the Jenkins container is started, even though you haven’t manually started the WSL.
-<br><br>
+    - Press Apply & Restart (You may need to restart the Docker container manually). **I had the experience that it did not do anything after pressing 'Apply', when Started Docker Desktop with Admin rights it was fine**
+
+**Note**: You don’t need to start the WSL distribution yourself. Docker will automatically start it when needed. You can verify this by observing that the WSL is running when the Jenkins container is started, even though you haven’t manually started the WSL. When you stop the WSL distribution manual (wsl --terminate ...) Docker will display an error and display a button to restart the WSL distribution again for you.
+ <br><br>
 
 ### 2.3 Initial Jenkins configuration
 - In Docker Desktop, examine the start-up log of the container. Near the top, you should find a code that is required for the initial login.
 - Start Jenkins by opening:[http://localhost:8081/](http://localhost:8081/) in your Browser
 - When prompted, enter the login code from the start-up log.
-- On the next page, select the option **'Install recommended plugins'**. This may take some time to complete.
+- On the next page, select the option **'Install suggested plugins'**. This may take some time to complete.
 - After the plugins are installed, create your own login ID and password. Once done, Jenkins is ready for use..
 
 > *Remark:*{: style="color: Grey;font-size:13px; "}
@@ -73,15 +83,15 @@ Note: You don’t need to start the WSL distribution yourself. Docker will autom
 
 
 ### 2.4 Use the  Local Email Service
-The image also installs an email-like server that can be used to send local emails in case a **build task fails**. This provides a centralized location to review error notifications.
+The image also installs an email-like server that can send local emails if a **build task fails**. This provides a centralized location for reviewing error notifications.
 
 To configure it in Jenkins:
 - In the Main Jenkins Window choose **Manage Jenkins** -> followed by **System**
-- In the **Jenkins Location** section, set the URL to: **http://localhost:8081/** (yes it complains, but thats fine for our local service)
+- In the **Jenkins Location** section, set the URL to: **http://localhost:8081/** (yes it complains, but that's fine for our local service)
 - In the **E-mail Notification** section (**not** 'Extended E-mail Notification'): 
-    - Set **SMTP server** to:  **mailhog**
+    - Set **SMTP server** to:  **mailhog** (the docker service)
     - Press **Advanced**
-    - Set  **SMTP Port** to: **1025**
+    - Set  **SMTP Port** to: **1025** (from  docker compose)
 - Check the box for **Test configuration by sending a test e-mail**.
     - Enter any e-mail address (e.g., Jenkins-err@local.com) 
     - Press **Test configuration**
@@ -89,19 +99,18 @@ To configure it in Jenkins:
 <br><br>
 
 ## 3 Sample Build task
-Here are the configuration instructions for a simple sample **build task** to get you started and to verify that the setup is correct. The build task will call an existing web page on the host. For this example, use the following address (ensure that the link returns a valid header from your host):
+Here are the configuration instructions for a simple build task to help you get started and verify the setup. The task will call an existing web page on the host. For this example, use the following address, ensuring it returns a valid header from your host:
 >  http://host.docker.internal:4072
+<br><br>
 
-<br>
-
-#### Follow these steps:
+#### 3.1 Follow these steps:
 - In the Jenkins Dashboard, select **New Item** and enter a name, for example: 'Is Running - Test WebSite'
 - Select item type: **Freestyle project** then click **OK**
 - Add a description, such as: 'Description Is Running - Test WebSite'
 - Go tot **Build Triggers** and check the box for **Build periodically**
     - In the Schedule box enter:
     <pre class="nje-cmd-one-line-sm-ident">   H 10-11 * * *</pre>
-    <span class="nje-ident"></span>This means to run between 10 and 11 AM, and choose a suitable minute Indicated by the: H
+    <span class="nje-ident"></span>This means to run between 10 and 11 AM, and choose a suitable minute, indicated by the: H
     - Optional you could add at the top:
     <pre class="nje-cmd-one-line-sm-ident">  TZ=Europe/Amsterdam</pre>
     <span class="nje-ident"></span> Choose your own timezone
@@ -109,17 +118,17 @@ Here are the configuration instructions for a simple sample **build task** to ge
 - Scroll down to **Build Steps**
     - From **Add build step** select: **Execute shell**
     - In the **Command box** Enter: 
-    <pre class="nje-cmd-one-line-sm-ident">   curl -sI http://host.docker.internal:4072 | grep -i "HTTP/" | grep -i "200 OK" || exit 1</pre>
+    <pre class="nje-cmd-one-line-sm-ident">   curl -sI http://host.docker.internal:4002 | grep -i "HTTP/" | grep -i "200 OK" || exit 1</pre>
     <span class="nje-ident"></span> This checks if the web site is up by inspecting the header.
-    - Apply -> Save
+    - Apply 
 - Scroll down to the **Post-build Actions**
     - From the **Add post-build action** chose: E-mail Notification
     - In the Recipients add a fake e-mail address , i.e. Dev@local-home. (It really does not matter which Email all will end up in mailhog) 
-    - Apply -> Save
+    - Apply -> Save 
 
 <br>
 
-#### Test the Build Task
+#### 3.2 Test the Build Task
 After saving the action, you should be redirected to the 'Is Running - Test WebSite' page. If not, search for this page..
 - Check that your website is running.
 - Press the **Build Now** button.
@@ -127,4 +136,4 @@ After saving the action, you should be redirected to the 'Is Running - Test WebS
 - Turn off the WebSite.
 - Press the **Build Now** button again.
 - After a short time the **Build History** Should display a **red** checkmark with date and time to indicating a failed run of the task.
-- Visit the Mailhog website at: [http://localhost:8025/#] (http://localhost:8025/) and check that a new mail from **Dev@local-home** has arrived with the failure announcement of the build task.
+- Visit the Mailhog website at: [http://localhost:8025/] (http://localhost:8025/) and check that a new mail from **Dev@local-home** has arrived with the failure announcement of the build task.

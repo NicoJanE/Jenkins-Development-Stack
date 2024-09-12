@@ -11,7 +11,7 @@ _This source code is licensed under the MIT License found in the  'LICENSE.md' f
 <br><br>
 
 # What
-This Docker image is designed to host Jenkins in a Debian-based container for local and remote Git projects (if needed). It also includes a limited **mail** server to list the failed **build tasks**
+This Docker image is designed to host Jenkins in a Debian-based container for local and remote Git projects. It also includes a limited **mail** server to list the failed **build tasks**
 
 ## Quick Setup
 While creating the container is straightforward, a few additional steps are necessary to ensure everything is set up correctly. There are no "quick setup" instructions available for this image. Please refer to the [how to create a development container](./Howtos/howto_create_a_dev_container) document, which covers installation and configuration
