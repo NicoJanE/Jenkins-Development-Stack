@@ -1,3 +1,6 @@
 **/UnUsed/
 **/_#Installs_Required/
 .njerepo
+
+# Ignore any directory or file (at any level) starting with an underscore
+**/_*
