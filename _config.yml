@@ -1,7 +1,7 @@
 # A change in this file, NEEDS a rebuild!
 #
 
-title: <font size="6"><span style="color:#FFD700">D</span>ocker <span style="color:#FFA500">S</span>tack <span style="color:#FF7F50">J</span>enkins</font>
+title: <font size="6"><span style="color:#FFD700">D</span>ocker <span style="color:#FFA500">S</span>tack <span style="color:#FF7F50">J</span>enkins</font>  <span><font size="4"> - Supporting container </font> </span>
 description: <b><i><font size="3">A Docker container for Jenkins builds</span></font></i></b>
 
 show_downloads: true
