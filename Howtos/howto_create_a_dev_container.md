@@ -24,7 +24,7 @@ Jenkins may display the following warning: *"Building on the built-in node can b
   <b>What's in my network</b>
   </summary>
 It can be useful to know what containe, IP4 addresses and ports are used in a network
-For this I have a script that displays the information for you. it can be found in my **Powershelll-Utilities** repository [here](https://github.com/NicoJanE/Powershell-Utilities). Use the `docker-netw-info` directory to execute the scrip
+For this I have a script that displays the information for you. it can be found in my **Powershelll-Utilities** repository [**here**](https://github.com/NicoJanE/Powershell-Utilities). Use the `docker-netw-info` directory to execute the scrip
 </details>
 
 
