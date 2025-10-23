@@ -1,6 +1,7 @@
 **/UnUsed/
 **/_#Installs_Required/
 .njerepo
+/Jenkins-Service/
 
 # Ignore any directory or file (at any level) starting with an underscore
 **/_*
