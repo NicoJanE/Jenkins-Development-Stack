@@ -8,7 +8,7 @@ This is a **Jenkins build service** container. It includes a local "mail server"
  <details>  
   <summary class="clickable-summary">
   <span  class="summary-icon"></span> <!-- Square Symbol -->
-  <b>What's in the external network</b>
+  <b>What's in the external network?</b>
   </summary>
   
 > It can be useful to know what containe, IPv4 addresses and ports are used in a network
