@@ -10,7 +10,7 @@ _Copyright (c) 2024 Nico Jan Eelhart_
 _This source code is licensed under the MIT License found in the  'LICENSE.md' file in the root directory of this source tree._ </small>
 <br><br>
 
-# Jenkins <span style="color: #409EFF; font-size: 0.6em; font-style: italic;"> -  Docker Setup & Usage Guide</span>
+# Jenkins <span style="color: #409EFF; font-size: 0.6em; font-style: italic;"> -  Docker Support Container</span>
 
 ## ℹ️ Introduction
 
