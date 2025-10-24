@@ -9,7 +9,9 @@ _This source code is licensed under the MIT License found in the  'LICENSE.md' f
 </small>
 <br>
 
-# Introduction
+#  Jenkins <span style="color: #409EFF; font-size: 0.6em; font-style: italic;"> -  Docker Support Container</span>
+
+## ℹ️ Introduction
 
 This Jenkins container consists of:
 
@@ -27,8 +29,7 @@ It can be useful to know what containe, IP4 addresses and ports are used in a ne
 For this I have a script that displays the information for you. it can be found in my **Powershelll-Utilities** repository [**here**](https://github.com/NicoJanE/Powershell-Utilities). Use the `docker-netw-info` directory to execute the scrip
 </details>
 
-
-## Create & configure the container
+## 🛠️ Create & configure the container
 
 To create the Docker container:
 
@@ -41,13 +42,13 @@ To create the Docker container:
 
 <pre class="nje-cmd-one-line">docker-compose -f compose_jenkins.yml up -d --build --force-recreate </pre>
 
-### Verify Network
+### 🔎 Verify Network
 
 - Verify that both containers are on the same network: ``docker network inspect dev1-net``  
   Also the other containers in the network will be shown including details like Ip address
 - Check the IP address inside a container: ``hostname -I``
 
-### Expected results
+### ✅ Expected results
 
 - A new container named **'jenkins-service\jenkins-img-1**' should be present in Docker Desktop and should be running.
 - Also a sub container **jenkins-service\mailhog-1**should be present.
@@ -55,7 +56,7 @@ To create the Docker container:
 - You can access Jenkins on the host (if you haven’t changed the port) by navigating to **[http://localhost:8081/](http://localhost:8081/)**
 <br><br>
 
-### Initial Jenkins configuration
+### ⚙️ Initial Jenkins configuration
 
 - In Docker Desktop, examine the start-up log of the container. Near the top, you should find a code that is required for the initial login.
 - Start Jenkins by opening:[http://localhost:8081/](http://localhost:8081/) in your Browser
@@ -68,7 +69,7 @@ To create the Docker container:
 > <small>Because we use a bridged network and attached WSL we can access the host with: **host.docker.internal** for example: </small>
 > - <small>  ***curl -s http://host.docker.internal:4072**/* </small>
 
-### How to  Use the Local Email Service
+### 📮 How to  Use the Local Email Service
 
 The image also installs an email-like server that can send local emails if a **build task fails**. This provides a centralized location for reviewing error notifications.
 
@@ -84,11 +85,12 @@ To configure it in Jenkins:
   - Enter any e-mail address (e.g., Jenkins-err@local.com) 
   - Press **Test configuration**
   - In the host Open the link: **[http://localhost:8025/](http://localhost:8025/)** in your browser, and the message should appear there.
-<br><br>
+
+<br>
 
 ---
 
-## Appendix I  Sample Jenkins Build task
+## 📎 Appendix I  Sample Jenkins Build task
 
 Here are the configuration instructions for a simple build task to help you get started and verify the setup. The task will call an existing web page on the host. For this example, use the following address, ensuring it returns a valid header from your host:
 >http://host.docker.internal:4072
