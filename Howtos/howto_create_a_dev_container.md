@@ -91,11 +91,9 @@ To configure it in Jenkins:
 ---
 
 <details>
-<summary class="clickable-summary">
-  <span class="summary-icon"></span>
-   <h2> Appendix I</h2><span style="color: #409EFF; font-size: 16px;; font-style: italic;"> -  Sample Jenkins Build task </span>
+<summary class="clickable-summary"> <span class="summary-icon"></span>
+    <span style="color: #097df1ff; font-size: 26px;">Appendix I</span> <span style="color: #409EFF; font-size: 16px; font-style: italic;"> -  Sample Jenkins Build task </span>
 </summary>
-
 ## 📎 Sample Jenkins Build task
 
 Here are the configuration instructions for a simple build task to help you get started and verify the setup. The task will call an existing web page on the host. For this example, use the following address, ensuring it returns a valid header from your host:
