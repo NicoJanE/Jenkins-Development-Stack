@@ -90,7 +90,13 @@ To configure it in Jenkins:
 
 ---
 
-## 📎 Appendix I  Sample Jenkins Build task
+<details>
+<summary class="clickable-summary">
+  <span class="summary-icon"></span>
+    Appendix I</h2><span style="color: #409EFF; font-size: 16px;; font-style: italic;"> -  Sample Jenkins Build task </span>
+</summary>
+
+## 📎 Sample Jenkins Build task
 
 Here are the configuration instructions for a simple build task to help you get started and verify the setup. The task will call an existing web page on the host. For this example, use the following address, ensuring it returns a valid header from your host:
 >http://host.docker.internal:4072
@@ -130,6 +136,8 @@ After saving the action, you should be redirected to the 'Is Running - Test WebS
 - Press the **Build Now** button again.
 - After a short time the **Build History** Should display a **red** checkmark with date and time to indicating a failed run of the task.
 - Visit the Mailhog website at: [http://localhost:8025/] (http://localhost:8025/) and check that a new mail from **Dev@local-home** has arrived with the failure announcement of the build task.
+
+</details>
 
 <br>
 <div align="center"> ─── ✦ ───
