@@ -9,7 +9,7 @@ _This source code is licensed under the MIT License found in the  'LICENSE.md' f
 </small>
 <br>
 
-#  Jenkins <span style="color: #409EFF; font-size: 0.6em; font-style: italic;"> -  Docker Support Container</span>
+# Jenkins <span style="color: #409EFF; font-size: 0.6em; font-style: italic;"> -  Docker Setup & Usage Guide</span>
 
 ## ℹ️ Introduction
 
@@ -93,7 +93,7 @@ To configure it in Jenkins:
 <details>
 <summary class="clickable-summary">
   <span class="summary-icon"></span>
-    Appendix I</h2><span style="color: #409EFF; font-size: 16px;; font-style: italic;"> -  Sample Jenkins Build task </span>
+   <h2> Appendix I</h2><span style="color: #409EFF; font-size: 16px;; font-style: italic;"> -  Sample Jenkins Build task </span>
 </summary>
 
 ## 📎 Sample Jenkins Build task
