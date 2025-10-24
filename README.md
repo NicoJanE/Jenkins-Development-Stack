@@ -19,7 +19,7 @@ For this we have a script that displays the information for you. it can be found
 
 - For details on creating and using this container, see: [Setup](https://nicojane.github.io/Jenkins-Development-Stack/Howtos/howto_create_a_dev_container.html)
 
-### ⚡Quick Setup
+### ⚡🏃‍♂️ Quick Setup
 
 - `docker network create --subnet=172.40.0.0/24 dev1-net`
 - `docker-compose -f compose_jenkins.yml up -d --build --force-recreate`

@@ -12,11 +12,10 @@ _This source code is licensed under the MIT License found in the  'LICENSE.md' f
 
 # Jenkins <span style="color: #409EFF; font-size: 0.6em; font-style: italic;"> -  Docker Setup & Usage Guide</span>
 
+## ℹ️ Introduction
+
 This Docker image is designed to host Jenkins in a Debian-based container for local and remote Git projects. It also includes a limited **mail** server to list the failed **build tasks**
 
-## Quick Setup
+## ⚡ Setup
 
-While creating the container is straightforward, a few additional steps are necessary to ensure everything is set up correctly. There are no "quick setup" instructions available for this image. Please refer to the [**setup**](./Howtos/howto_create_a_dev_container) document, which covers installation and configuration
-
-
-
+While creating the container is straightforward, a few additional steps are necessary to ensure everything is set up correctly. There are no "quick setup" instructions available for this image. Please refer to the [**setup**](./Howtos/howto_create_a_dev_container) document, which covers installation and configuration.
