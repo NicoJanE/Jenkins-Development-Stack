@@ -3,11 +3,7 @@ layout: default_c
 RefPages:
  - howto_create_a_dev_container
 --- 
-<small> _This file is part of: Jenkins development Stack_ 
-_Copyright (c) 2024 Nico Jan Eelhart_
-_This source code is licensed under the MIT License found in the  'LICENSE.md' file in the root directory of this source tree._
-</small>
-<br>
+
 
 # Jenkins <span style="color: #409EFF; font-size: 0.6em; font-style: italic;"> -  Docker Setup & Usage Guide</span>
 
@@ -137,6 +133,9 @@ After saving the action, you should be redirected to the 'Is Running - Test WebS
 
 </details>
 
-<br>
-<div align="center"> ─── ✦ ───
-</div>
+
+<span style="color: #6d757dff; font-size: 10px; font-style: italic;"> <br>
+This file is part of: **Jenkins Development Stack**
+Copyright (c) 2025 Nico Jan Eelhart. This source code is licensed under the MIT License found in the  'LICENSE.md' file in the root directory of this source tree.</span>
+
+<p align="center">─── ✦ ───</p>
